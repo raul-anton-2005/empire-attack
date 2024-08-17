@@ -2,6 +2,7 @@ import pygame
 import random
 from characters import Cube
 from characters import Enemy
+from characters import Heart
 
 
 pygame.init()
@@ -41,10 +42,15 @@ lives = 3
 points = 0
 laser = pygame.image.load('assets/laser.png')
 laser = pygame.transform.scale(laser, (35, 45))
+heart_skin = pygame.image.load('assets/heart.jpg')
+heart_skin = pygame.transform.scale(heart_skin, (30, 30))
+heart_spawned = False
+current_points = None
 
 lose_text = FONT.render('YOU LOST', True, 'white')
 
 while playing:
+    WINDOW.fill('black')
     events = pygame.event.get()
     keys = pygame.key.get_pressed()
     life_text = FONT.render(f'Lives: {lives}', True, 'white')
@@ -55,16 +61,36 @@ while playing:
             if event.type == pygame.QUIT:
                 playing = False
                 
-    if lives <= 0:
-        WINDOW.blit(lose_text, (WIDTH/2.3, HEIGHT/2))
-    else:
+    if lives > 0:
         time_spent += clock.tick(FPS)
 
         if time_spent > time_between_enemies:
             enemies.append(Enemy(random.randint(5, WIDTH - Enemy.width), 25))
             time_spent = 0
+
+        if points != 0:
+            if points % 10 == 0 and not heart_spawned and points != current_points:
+                current_points = points
+                heart_spawned = True
+                pos_x = random.randint(5, WIDTH - Enemy.width)
+                pos_y = 25
+                heart = Heart(pos_x, pos_y)
+            if heart_spawned:
+                heart.draw(WINDOW)
+                WINDOW.blit(heart_skin, (heart.x, heart.y))
+                heart.movement()
+            if heart_spawned and pygame.Rect.colliderect(cube.rect, heart.rect):
+                heart_spawned = False
+                pos_x = None
+                pos_y = None
+                lives += 1
+            if heart_spawned and heart.y > HEIGHT:
+                heart_spawned = False
+                pos_x = None
+                pos_y = None
+
+
         
-        WINDOW.fill('black')
         for enemy in enemies:
             enemy.draw(WINDOW)
             WINDOW.blit(tie, (enemy.x, enemy.y))
@@ -77,6 +103,7 @@ while playing:
             if enemy.life == 0:
                 enemies.remove(enemy)
                 points += 1
+
         for bullet in cube.bullets:
             bullet.draw(WINDOW)
             WINDOW.blit(laser, (bullet.x, bullet.y))
@@ -85,19 +112,25 @@ while playing:
                 if pygame.Rect.colliderect(enemy.rect, bullet.rect):
                     enemy.life -= 10
                     cube.bullets.remove(bullet)
+
         if cube.x > WIDTH - cube.width:
             cube.x = WIDTH - cube.width
         if cube.x < 0:
             cube.x = 0 
         cube.draw(WINDOW)
         WINDOW.blit(xwing, (cube.x, cube.y))
+
         if pygame.time.get_ticks() - last_bullet > time_between_bullets:
             cube.generate_bullets()
             pew.play()
             last_bullet = pygame.time.get_ticks()
-        WINDOW.blit(life_text, (15, 15))
-        WINDOW.blit(points_text, (15, 60))
         manage_keys(keys)
+
+    else:    
+        WINDOW.blit(lose_text, (WIDTH/2.3, HEIGHT/2))
+
+    WINDOW.blit(life_text, (15, 15))
+    WINDOW.blit(points_text, (15, 60))
     pygame.display.update()
 
 quit()
