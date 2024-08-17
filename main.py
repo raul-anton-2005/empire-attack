@@ -46,6 +46,8 @@ heart_skin = pygame.image.load('assets/heart.jpg')
 heart_skin = pygame.transform.scale(heart_skin, (30, 30))
 heart_spawned = False
 current_points = None
+enemies_destroyed = 0
+take_life = False
 
 lose_text = FONT.render('YOU LOST', True, 'white')
 
@@ -100,9 +102,18 @@ while playing:
                 enemies.remove(enemy)
             if enemy.y > HEIGHT:
                 enemies.remove(enemy)
+                enemies_destroyed += 1
             if enemy.life == 0:
                 enemies.remove(enemy)
                 points += 1
+        
+        if enemies_destroyed % 20 == 0 and enemies_destroyed != 0 and current_points != points:
+            current_points = points
+            take_life = True
+        if take_life:
+            take_life = False
+            lives -= 1
+
 
         for bullet in cube.bullets:
             bullet.draw(WINDOW)
