@@ -31,18 +31,18 @@ time_between_bullets = 350
 
 playing = True
 
-cube = Cube(WIDTH/2, HEIGHT-100)
-xwing = pygame.image.load('assets/xwing.jpg')
+cube = Cube(WIDTH/2, HEIGHT-120)
+xwing = pygame.image.load('assets/xwing.png')
 xwing = pygame.transform.scale(xwing, (100,100))
 pew = pygame.mixer.Sound('assets/pew.mp3')
 explotion = pygame.mixer.Sound('assets/explotion.mp3')
 heal = pygame.mixer.Sound('assets/heal.mp3')
 enemies = []
 tie = pygame.image.load('assets/tie.jpg')
-tie = pygame.transform.scale(tie, (75, 75))
+tie = pygame.transform.scale(tie, (150, 100))
 lives = 3
 points = 0
-laser = pygame.image.load('assets/laser.png')
+laser = pygame.image.load('assets/laser.jpg')
 laser = pygame.transform.scale(laser, (35, 45))
 heart_skin = pygame.image.load('assets/heart.jpg')
 heart_skin = pygame.transform.scale(heart_skin, (30, 30))

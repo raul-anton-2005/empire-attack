@@ -2,8 +2,8 @@ import pygame
 
 
 class Cube:
-    width = 100
-    height = 100
+    width = 80
+    height = 80
     speed = 7.5
     colour = 'green'
 
@@ -18,7 +18,7 @@ class Cube:
         pygame.draw.rect(window, self.colour, self.rect)
     
     def generate_bullets(self):
-        self.bullets.append(Bullet(self.rect.centerx - 17, self.rect.centery))
+        self.bullets.append(Bullet(self.rect.centerx - 7, self.rect.centery - 15))
 
 
 class Bullet:
@@ -40,8 +40,8 @@ class Bullet:
 
 
 class Enemy:
-    width = 75
-    height = 75
+    width = 150
+    height = 100
     speed = 4
     colour = 'red'
 
