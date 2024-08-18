@@ -18,7 +18,7 @@ class Cube:
         pygame.draw.rect(window, self.colour, self.rect)
     
     def generate_bullets(self):
-        self.bullets.append(Bullet(self.rect.centerx - 5, self.rect.centery))
+        self.bullets.append(Bullet(self.rect.centerx - 17, self.rect.centery))
 
 
 class Bullet:

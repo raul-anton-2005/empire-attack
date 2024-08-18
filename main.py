@@ -35,6 +35,8 @@ cube = Cube(WIDTH/2, HEIGHT-100)
 xwing = pygame.image.load('assets/xwing.jpg')
 xwing = pygame.transform.scale(xwing, (100,100))
 pew = pygame.mixer.Sound('assets/pew.mp3')
+explotion = pygame.mixer.Sound('assets/explotion.mp3')
+heal = pygame.mixer.Sound('assets/heal.mp3')
 enemies = []
 tie = pygame.image.load('assets/tie.jpg')
 tie = pygame.transform.scale(tie, (75, 75))
@@ -86,19 +88,19 @@ while playing:
                 pos_x = None
                 pos_y = None
                 lives += 1
+                heal.play()
             if heart_spawned and heart.y > HEIGHT:
                 heart_spawned = False
                 pos_x = None
                 pos_y = None
 
-
-        
         for enemy in enemies:
             enemy.draw(WINDOW)
             WINDOW.blit(tie, (enemy.x, enemy.y))
             enemy.movement()
             if pygame.Rect.colliderect(cube.rect, enemy.rect):
                 lives -= 1
+                explotion.play()
                 enemies.remove(enemy)
             if enemy.y > HEIGHT:
                 enemies.remove(enemy)
@@ -113,7 +115,7 @@ while playing:
         if take_life:
             take_life = False
             lives -= 1
-
+            explotion.play()
 
         for bullet in cube.bullets:
             bullet.draw(WINDOW)
