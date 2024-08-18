@@ -8,6 +8,7 @@ from characters import Heart
 pygame.init()
 pygame.mixer.init()
 
+pygame.display.set_caption('Empire Attack')
 
 def manage_keys(keys):
     if keys[pygame.K_a] or keys[pygame.K_LEFT]:
