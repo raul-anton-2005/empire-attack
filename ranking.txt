@@ -1,0 +1,7 @@
+Raul Anton#110
+& C:/Users/raula/AppData/Local/Programs/Python/Python312/python.exe c:/Users/raula/Dev/PythonProjects/empire-attack/main.py#2
+& C:/Users/raula/AppData/Local/Programs/Python/Python312/python.exe c:/Users/raula/Dev/PythonProjects/empire-attack/main.py#0
+& C:/Users/raula/AppData/Local/Programs/Python/Python312/python.exe c:/Users/raula/Dev/PythonProjects/empire-attack/main.py#3
+& C:/Users/raula/AppData/Local/Programs/Python/Python312/python.exe c:/Users/raula/Dev/PythonProjects/empire-attack/main.py#0
+& C:/Users/raula/AppData/Local/Programs/Python/Python312/python.exe c:/Users/raula/Dev/PythonProjects/empire-attack/main.py#10
+& C:/Users/raula/AppData/Local/Programs/Python/Python312/python.exe c:/Users/raula/Dev/PythonProjects/empire-attack/main.py#14

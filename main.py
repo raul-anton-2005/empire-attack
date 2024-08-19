@@ -17,9 +17,8 @@ def manage_keys(keys):
         cube.x += cube.speed
 
 
-WIDTH = 1000
-HEIGHT = 800
-WINDOW = pygame.display.set_mode([WIDTH, HEIGHT])     
+WIDTH, HEIGHT = 1000, 800
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)     
 FPS = 60   
 FONT = pygame.font.SysFont("Cascadia Code", 40)
 
@@ -55,6 +54,7 @@ take_life = False
 lose_text = FONT.render('YOU LOST', True, 'white')
 
 while playing:
+
     WINDOW.fill('black')
     events = pygame.event.get()
     keys = pygame.key.get_pressed()
@@ -65,35 +65,20 @@ while playing:
     for event in events:
             if event.type == pygame.QUIT:
                 playing = False
-                
+            if event.type == pygame.VIDEORESIZE:
+                WIDTH, HEIGHT = event.w, event.h
+                WINDOW = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+            
+    area = HEIGHT * WIDTH
+    cube.speed = 7.5 * (area / (1000 * 800))
+
     if lives > 0:
         time_spent += clock.tick(FPS)
 
         if time_spent > time_between_enemies:
-            enemies.append(Enemy(random.randint(5, WIDTH - Enemy.width), 25))
+            enemies.append(Enemy(random.randint(5, WIDTH - Enemy.width), - 80))
             time_spent = 0
 
-        if points != 0:
-            if points % 10 == 0 and not heart_spawned and points != current_points:
-                current_points = points
-                heart_spawned = True
-                pos_x = random.randint(5, WIDTH - Enemy.width)
-                pos_y = 25
-                heart = Heart(pos_x, pos_y)
-            if heart_spawned:
-                heart.draw(WINDOW)
-                WINDOW.blit(heart_skin, (heart.x, heart.y))
-                heart.movement()
-            if heart_spawned and pygame.Rect.colliderect(cube.rect, heart.rect):
-                heart_spawned = False
-                pos_x = None
-                pos_y = None
-                lives += 1
-                heal.play()
-            if heart_spawned and heart.y > HEIGHT:
-                heart_spawned = False
-                pos_x = None
-                pos_y = None
 
         for enemy in enemies:
             enemy.draw(WINDOW)
@@ -108,6 +93,7 @@ while playing:
                 enemies_destroyed += 1
             if enemy.life == 0:
                 enemies.remove(enemy)
+                enemies_destroyed = 0
                 points += 1
         
         if enemies_destroyed % 20 == 0 and enemies_destroyed != 0 and current_points != points:
@@ -140,6 +126,27 @@ while playing:
             last_bullet = pygame.time.get_ticks()
         manage_keys(keys)
 
+        if points != 0:
+            if points % 20 == 0 and not heart_spawned and points != current_points:
+                current_points = points
+                heart_spawned = True
+                pos_x = random.randint(5, WIDTH - Enemy.width)
+                pos_y = 25
+                heart = Heart(pos_x, pos_y)
+            if heart_spawned:
+                heart.draw(WINDOW)
+                WINDOW.blit(heart_skin, (heart.x, heart.y))
+                heart.movement()
+            if heart_spawned and pygame.Rect.colliderect(cube.rect, heart.rect):
+                heart_spawned = False
+                pos_x = None
+                pos_y = None
+                lives += 1
+                heal.play()
+            if heart_spawned and heart.y > HEIGHT:
+                heart_spawned = False
+                pos_x = None
+                pos_y = None
     else:    
         WINDOW.blit(lose_text, (WIDTH/2.3, HEIGHT/2))
 
@@ -147,4 +154,24 @@ while playing:
     WINDOW.blit(points_text, (15, 60))
     pygame.display.update()
 
-quit()
+pygame.display.quit()
+name = input('Enter your name: ')
+
+if name != '':
+    with open('ranking.txt', 'a') as ranking:
+        ranking.write(f'{name}#{points}\n')
+
+table = []
+
+with open('ranking.txt', 'r') as file:
+    for line in file:
+        if line[-1] == '\n':
+            line = line[:-1]
+        data = line.split('#')
+        table.append(data)
+
+table = sorted(table, key=lambda x: int(x[1]), reverse=True)
+print('\n\n\n\n\n\n')
+for element in table:
+    print(f'{element[0]}: {element[1]}')
+print('\n\n\n\n\n\n')
