@@ -1,8 +1,31 @@
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+
+"""
+Star Wars Retro Game
+"""
+
+# Built-in/Generic Imports
+
 import pygame
 import random
+
+# Own modules
+
 from characters import Cube
 from characters import Enemy
 from characters import Heart
+
+__authors__ = ["Raúl Antón Echevarría"]
+__contact__ = ["raulantonechevarria@gmail.com"]
+__copyright__ = "Not Free To Use"
+__credits__ = ["Raúl Antón Echevarría"]
+__date__ = "2024/08/15"
+__email__ = ["raulantonechevarria@gmail.com"]
+__license__ = "GPLv3"
+__maintainer__ = "Developer"
+__status__ = "Production"
+__version__ = "0.0.1"
 
 
 pygame.init()
