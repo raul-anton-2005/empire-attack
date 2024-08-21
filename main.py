@@ -15,6 +15,7 @@ import random
 from characters import Cube
 from characters import Enemy
 from characters import Heart
+from characters import Reward
 
 __authors__ = ["Raúl Antón Echevarría"]
 __contact__ = ["raulantonechevarria@gmail.com"]
@@ -51,6 +52,10 @@ time_spent = 0
 time_between_enemies = 1000
 last_bullet = 0
 time_between_bullets = 350
+last_reward = 0
+time_between_rewards = 45000
+time_infinite_bullets = 10000
+
 
 playing = True
 
@@ -69,10 +74,15 @@ laser = pygame.image.load('assets/laser.jpg')
 laser = pygame.transform.scale(laser, (35, 45))
 heart_skin = pygame.image.load('assets/heart.jpg')
 heart_skin = pygame.transform.scale(heart_skin, (30, 30))
+infinite_skin = pygame.image.load('assets/infinite.webp')
+infinite_skin = pygame.transform.scale(infinite_skin, (60, 60))
 heart_spawned = False
 current_points = None
 enemies_destroyed = 0
 take_life = False
+reward_spawned = False
+infinite_bullets = False
+number_infinite_bullets = 0
 
 lose_text = FONT.render('YOU LOST', True, 'white')
 
@@ -102,6 +112,7 @@ while playing:
             enemies.append(Enemy(random.randint(5, WIDTH - Enemy.width), - 80))
             time_spent = 0
 
+        
 
         for enemy in enemies:
             enemy.draw(WINDOW)
@@ -149,27 +160,50 @@ while playing:
             last_bullet = pygame.time.get_ticks()
         manage_keys(keys)
 
+        if pygame.time.get_ticks() - last_reward > time_between_rewards:
+            reward_spawned = True
+            pos_x_r = random.randint(5, WIDTH - Enemy.width)
+            pos_y_r = 25
+            last_reward = pygame.time.get_ticks()
+            reward = Reward(pos_x_r, pos_y_r)
+        if reward_spawned:
+            reward.draw(WINDOW)
+            WINDOW.blit(infinite_skin, (reward.x, reward.y))
+            reward.movement()
+        if reward_spawned and pygame.Rect.colliderect(cube.rect, reward.rect):
+            reward_spawned = False
+            pos_x_r = None
+            pos_y_r = None
+            infinite_bullets = True
+            time_between_bullets = 50
+        if infinite_bullets:
+            number_infinite_bullets += 10
+            if number_infinite_bullets > time_infinite_bullets:
+                infinite_bullets = False
+                time_between_bullets = 350
+                number_infinite_bullets = 0
+
         if points != 0:
             if points % 20 == 0 and not heart_spawned and points != current_points:
                 current_points = points
                 heart_spawned = True
-                pos_x = random.randint(5, WIDTH - Enemy.width)
-                pos_y = 25
-                heart = Heart(pos_x, pos_y)
+                pos_x_h = random.randint(5, WIDTH - Enemy.width)
+                pos_y_h = 25
+                heart = Heart(pos_x_h, pos_y_h)
             if heart_spawned:
                 heart.draw(WINDOW)
                 WINDOW.blit(heart_skin, (heart.x, heart.y))
                 heart.movement()
             if heart_spawned and pygame.Rect.colliderect(cube.rect, heart.rect):
                 heart_spawned = False
-                pos_x = None
-                pos_y = None
+                pos_x_h = None
+                pos_y_h = None
                 lives += 1
                 heal.play()
             if heart_spawned and heart.y > HEIGHT:
                 heart_spawned = False
-                pos_x = None
-                pos_y = None
+                pos_x_h = None
+                pos_y_h = None
     else:    
         WINDOW.blit(lose_text, (WIDTH/2.3, HEIGHT/2))
 
