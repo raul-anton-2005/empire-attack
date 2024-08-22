@@ -112,7 +112,6 @@ while playing:
             enemies.append(Enemy(random.randint(5, WIDTH - Enemy.width), - 80))
             time_spent = 0
 
-        
 
         for enemy in enemies:
             enemy.draw(WINDOW)
@@ -175,7 +174,7 @@ while playing:
             pos_x_r = None
             pos_y_r = None
             infinite_bullets = True
-            time_between_bullets = 50
+            time_between_bullets = 175
         if infinite_bullets:
             number_infinite_bullets += 10
             if number_infinite_bullets > time_infinite_bullets:
