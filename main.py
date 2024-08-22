@@ -21,12 +21,12 @@ __authors__ = ["Raúl Antón Echevarría"]
 __contact__ = ["raulantonechevarria@gmail.com"]
 __copyright__ = "Not Free To Use"
 __credits__ = ["Raúl Antón Echevarría"]
-__date__ = "2024/08/15"
+__date__ = "2024/08/22"
 __email__ = ["raulantonechevarria@gmail.com"]
 __license__ = "GPLv3"
 __maintainer__ = "Developer"
 __status__ = "Production"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 
 pygame.init()
@@ -112,7 +112,6 @@ while playing:
             enemies.append(Enemy(random.randint(5, WIDTH - Enemy.width), - 80))
             time_spent = 0
 
-
         for enemy in enemies:
             enemy.draw(WINDOW)
             WINDOW.blit(tie, (enemy.x, enemy.y))
@@ -195,6 +194,8 @@ while playing:
                 heart.movement()
             if heart_spawned and pygame.Rect.colliderect(cube.rect, heart.rect):
                 heart_spawned = False
+                if time_between_enemies > 500:
+                    time_between_enemies -= 50
                 pos_x_h = None
                 pos_y_h = None
                 lives += 1
