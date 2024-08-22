@@ -93,8 +93,8 @@ while playing:
     keys = pygame.key.get_pressed()
     life_text = FONT.render(f'Lives: {lives}', True, 'white')
     points_text = FONT.render(f'Points: {points}', True, 'white')
-    if points != 0 and points % 10 == 0:
-        Enemy.speed += 0.005
+
+    ### MANAGE EVENTS ###
     for event in events:
             if event.type == pygame.QUIT:
                 playing = False
@@ -105,7 +105,15 @@ while playing:
     area = HEIGHT * WIDTH
     cube.speed = 7.5 * (area / (1000 * 800))
 
+    ### INCREASE SPEED ###
+
+    if points != 0 and points % 10 == 0:
+        Enemy.speed += 0.005
+    
     if lives > 0:
+
+        ### MANAGE ENEMIES ###
+
         time_spent += clock.tick(FPS)
 
         if time_spent > time_between_enemies:
@@ -136,6 +144,8 @@ while playing:
             lives -= 1
             explotion.play()
 
+        ### MANAGE BULLETS ###
+
         for bullet in cube.bullets:
             bullet.draw(WINDOW)
             WINDOW.blit(laser, (bullet.x, bullet.y))
@@ -144,6 +154,14 @@ while playing:
                 if pygame.Rect.colliderect(enemy.rect, bullet.rect):
                     enemy.life -= 10
                     cube.bullets.remove(bullet)
+        
+        if pygame.time.get_ticks() - last_bullet > time_between_bullets:
+            cube.generate_bullets()
+            pew.play()
+            last_bullet = pygame.time.get_ticks()
+        manage_keys(keys)
+
+        ### MANAGE CUBE ###
 
         if cube.x > WIDTH - cube.width:
             cube.x = WIDTH - cube.width
@@ -152,11 +170,7 @@ while playing:
         cube.draw(WINDOW)
         WINDOW.blit(xwing, (cube.x, cube.y))
 
-        if pygame.time.get_ticks() - last_bullet > time_between_bullets:
-            cube.generate_bullets()
-            pew.play()
-            last_bullet = pygame.time.get_ticks()
-        manage_keys(keys)
+        ### MANAGE REWARDS ###
 
         if pygame.time.get_ticks() - last_reward > time_between_rewards:
             reward_spawned = True
@@ -180,6 +194,8 @@ while playing:
                 infinite_bullets = False
                 time_between_bullets = 350
                 number_infinite_bullets = 0
+
+        ### MANAGE LIVES ###
 
         if points != 0:
             if points % 20 == 0 and not heart_spawned and points != current_points:
