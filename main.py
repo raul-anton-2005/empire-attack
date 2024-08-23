@@ -45,6 +45,7 @@ WIDTH, HEIGHT = 1000, 800
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)     
 FPS = 60   
 FONT = pygame.font.SysFont("Cascadia Code", 40)
+VERSION = '0.0.3'
 
 clock = pygame.time.Clock()
 
@@ -198,7 +199,7 @@ while playing:
         ### MANAGE LIVES ###
 
         if points != 0:
-            if points % 20 == 0 and not heart_spawned and points != current_points:
+            if points % 50 == 0 and not heart_spawned and points != current_points:
                 current_points = points
                 heart_spawned = True
                 pos_x_h = random.randint(5, WIDTH - Enemy.width)
@@ -210,7 +211,7 @@ while playing:
                 heart.movement()
             if heart_spawned and pygame.Rect.colliderect(cube.rect, heart.rect):
                 heart_spawned = False
-                if time_between_enemies > 500:
+                if time_between_enemies > 800:
                     time_between_enemies -= 50
                 pos_x_h = None
                 pos_y_h = None
@@ -232,7 +233,7 @@ name = input('Enter your name: ')
 
 if name != '':
     with open('ranking.txt', 'a') as ranking:
-        ranking.write(f'{name}#{points}\n')
+        ranking.write(f'{name}#{points}#{VERSION}\n')
 
 table = []
 
@@ -246,5 +247,6 @@ with open('ranking.txt', 'r') as file:
 table = sorted(table, key=lambda x: int(x[1]), reverse=True)
 print('\n\n\n\n\n\n')
 for element in table:
-    print(f'{element[0]}: {element[1]}')
+    print(f'{element[0]}: {element[1]} -> {element[2]}')
+
 print('\n\n\n\n\n\n')
