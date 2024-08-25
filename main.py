@@ -64,6 +64,7 @@ cube = Cube(WIDTH/2, HEIGHT-120)
 xwing = pygame.image.load('assets/xwing.png')
 xwing = pygame.transform.scale(xwing, (100,100))
 pew = pygame.mixer.Sound('assets/pew.mp3')
+pew.set_volume(0.25)
 explotion = pygame.mixer.Sound('assets/explotion.mp3')
 heal = pygame.mixer.Sound('assets/heal.mp3')
 enemies = []
@@ -87,6 +88,11 @@ number_infinite_bullets = 0
 
 lose_text = FONT.render('YOU LOST', True, 'white')
 
+pygame.mixer.music.load('assets/sw_theme.mp3')
+pygame.mixer.music.set_volume(0.85)
+pygame.time.delay(500)
+pygame.mixer.music.play(loops=-1)
+
 while playing:
 
     WINDOW.fill('black')
@@ -99,6 +105,7 @@ while playing:
     for event in events:
             if event.type == pygame.QUIT:
                 playing = False
+                pygame.mixer.music.stop()
             if event.type == pygame.VIDEORESIZE:
                 WIDTH, HEIGHT = event.w, event.h
                 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
@@ -136,7 +143,7 @@ while playing:
                 enemies.remove(enemy)
                 enemies_destroyed = 0
                 points += 1
-        
+
         if enemies_destroyed % 20 == 0 and enemies_destroyed != 0 and current_points != points:
             current_points = points
             take_life = True
@@ -155,7 +162,7 @@ while playing:
                 if pygame.Rect.colliderect(enemy.rect, bullet.rect):
                     enemy.life -= 10
                     cube.bullets.remove(bullet)
-        
+
         if pygame.time.get_ticks() - last_bullet > time_between_bullets:
             cube.generate_bullets()
             pew.play()
@@ -248,5 +255,4 @@ table = sorted(table, key=lambda x: int(x[1]), reverse=True)
 print('\n\n\n\n\n\n')
 for element in table:
     print(f'{element[0]}: {element[1]} -> {element[2]}')
-
 print('\n\n\n\n\n\n')
