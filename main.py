@@ -190,12 +190,12 @@ while playing:
             reward.draw(WINDOW)
             WINDOW.blit(infinite_skin, (reward.x, reward.y))
             reward.movement()
-        if reward_spawned and pygame.Rect.colliderect(cube.rect, reward.rect):
-            reward_spawned = False
-            pos_x_r = None
-            pos_y_r = None
-            infinite_bullets = True
-            time_between_bullets = 175
+            if pygame.Rect.colliderect(cube.rect, reward.rect):
+                reward_spawned = False
+                pos_x_r = None
+                pos_y_r = None
+                infinite_bullets = True
+                time_between_bullets = 175
         if infinite_bullets:
             number_infinite_bullets += 10
             if number_infinite_bullets > time_infinite_bullets:
@@ -206,7 +206,7 @@ while playing:
         ### MANAGE LIVES ###
 
         if points != 0:
-            if points % 5 == 0 and not heart_spawned and points != current_points:
+            if points % 50 == 0 and not heart_spawned and points != current_points:
                 current_points = points
                 heart_spawned = True
                 pos_x_h = random.randint(5, WIDTH - Enemy.width)
