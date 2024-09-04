@@ -206,7 +206,7 @@ while playing:
         ### MANAGE LIVES ###
 
         if points != 0:
-            if points % 50 == 0 and not heart_spawned and points != current_points:
+            if points % 5 == 0 and not heart_spawned and points != current_points:
                 current_points = points
                 heart_spawned = True
                 pos_x_h = random.randint(5, WIDTH - Enemy.width)
@@ -216,14 +216,14 @@ while playing:
                 heart.draw(WINDOW)
                 WINDOW.blit(heart_skin, (heart.x, heart.y))
                 heart.movement()
-            if heart_spawned and pygame.Rect.colliderect(cube.rect, heart.rect):
-                heart_spawned = False
-                if time_between_enemies > 800:
-                    time_between_enemies -= 50
-                pos_x_h = None
-                pos_y_h = None
-                lives += 1
-                heal.play()
+                if pygame.Rect.colliderect(cube.rect, heart.rect):
+                    heart_spawned = False
+                    if time_between_enemies > 800:
+                        time_between_enemies -= 50
+                    pos_x_h = None
+                    pos_y_h = None
+                    lives += 1
+                    heal.play()
             if heart_spawned and heart.y > HEIGHT:
                 heart_spawned = False
                 pos_x_h = None
