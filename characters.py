@@ -6,6 +6,8 @@ class Cube:
     height = 80
     speed = 7.5
     colour = 'green'
+    image = pygame.image.load('assets/xwing.png')
+    image = pygame.transform.scale(image, (100,100))
 
     def __init__(self, x, y) -> None:
         self.x = x
@@ -16,6 +18,7 @@ class Cube:
     def draw(self, window):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(window, self.colour, self.rect)
+        window.blit(self.image, (self.x, self.y))
     
     def generate_bullets(self):
         self.bullets.append(Bullet(self.rect.centerx - 7, self.rect.centery - 15))
@@ -26,6 +29,8 @@ class Bullet:
     height = 20
     speed = 7.5
     colour = 'blue'
+    image = pygame.image.load('assets/laser.jpg')
+    image = pygame.transform.scale(image, (35, 45))
 
     def __init__(self, x, y) -> None:
         self.x = x
@@ -35,6 +40,8 @@ class Bullet:
     def draw(self, window):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(window, self.colour, self.rect)
+        window.blit(self.image, (self.x, self.y))
+
     def movement(self):
         self.y -= self.speed
 
@@ -44,7 +51,8 @@ class Enemy:
     height = 100
     speed = 4
     colour = 'red'
-
+    image = pygame.image.load('assets/tie.jpg')
+    image = pygame.transform.scale(image, (150, 100))
     def __init__(self, x, y) -> None:
         self.x = x
         self.y = y
@@ -57,6 +65,7 @@ class Enemy:
     def draw(self, window):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(window, self.colour, self.rect)
+        window.blit(self.image, (self.x, self.y))
 
 
 class Heart:
@@ -64,6 +73,8 @@ class Heart:
     height = 30
     speed = 4
     colour = 'red'
+    image = pygame.image.load('assets/heart.jpg')
+    image = pygame.transform.scale(image, (30, 30))
 
     def __init__(self, x, y) -> None:
         self.x = x
@@ -76,6 +87,7 @@ class Heart:
     def draw(self, window):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(window, self.colour, self.rect)
+        window.blit(self.image, (self.x, self.y))
 
 
 class Reward:
@@ -83,6 +95,8 @@ class Reward:
     height = 30
     speed = 4
     colour = 'red'
+    image = pygame.image.load('assets/infinite.webp')
+    image = pygame.transform.scale(image, (60, 60))
 
     def __init__(self, x, y) -> None:
         self.x = x
@@ -95,3 +109,4 @@ class Reward:
     def draw(self, window):
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(window, self.colour, self.rect)
+        window.blit(self.image, (self.x, self.y))

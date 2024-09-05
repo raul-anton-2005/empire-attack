@@ -61,23 +61,12 @@ time_infinite_bullets = 10000
 playing = True
 
 cube = Cube(WIDTH/2, HEIGHT-120)
-xwing = pygame.image.load('assets/xwing.png')
-xwing = pygame.transform.scale(xwing, (100,100))
 pew = pygame.mixer.Sound('assets/pew.mp3')
 pew.set_volume(0.25)
 explotion = pygame.mixer.Sound('assets/explotion.mp3')
-heal = pygame.mixer.Sound('assets/heal.mp3')
 enemies = []
-tie = pygame.image.load('assets/tie.jpg')
-tie = pygame.transform.scale(tie, (150, 100))
 lives = 3
 points = 0
-laser = pygame.image.load('assets/laser.jpg')
-laser = pygame.transform.scale(laser, (35, 45))
-heart_skin = pygame.image.load('assets/heart.jpg')
-heart_skin = pygame.transform.scale(heart_skin, (30, 30))
-infinite_skin = pygame.image.load('assets/infinite.webp')
-infinite_skin = pygame.transform.scale(infinite_skin, (60, 60))
 heart_spawned = False
 current_points = None
 enemies_destroyed = 0
@@ -130,7 +119,6 @@ while playing:
 
         for enemy in enemies:
             enemy.draw(WINDOW)
-            WINDOW.blit(tie, (enemy.x, enemy.y))
             enemy.movement()
             if pygame.Rect.colliderect(cube.rect, enemy.rect):
                 lives -= 1
@@ -156,7 +144,6 @@ while playing:
 
         for bullet in cube.bullets:
             bullet.draw(WINDOW)
-            WINDOW.blit(laser, (bullet.x, bullet.y))
             bullet.movement()
             for enemy in enemies:
                 if pygame.Rect.colliderect(enemy.rect, bullet.rect):
@@ -176,7 +163,6 @@ while playing:
         if cube.x < 0:
             cube.x = 0 
         cube.draw(WINDOW)
-        WINDOW.blit(xwing, (cube.x, cube.y))
 
         ### MANAGE REWARDS ###
 
@@ -188,7 +174,6 @@ while playing:
             reward = Reward(pos_x_r, pos_y_r)
         if reward_spawned:
             reward.draw(WINDOW)
-            WINDOW.blit(infinite_skin, (reward.x, reward.y))
             reward.movement()
             if pygame.Rect.colliderect(cube.rect, reward.rect):
                 reward_spawned = False
@@ -214,7 +199,6 @@ while playing:
                 heart = Heart(pos_x_h, pos_y_h)
             if heart_spawned:
                 heart.draw(WINDOW)
-                WINDOW.blit(heart_skin, (heart.x, heart.y))
                 heart.movement()
                 if pygame.Rect.colliderect(cube.rect, heart.rect):
                     heart_spawned = False
