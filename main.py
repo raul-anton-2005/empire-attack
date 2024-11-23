@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 """
-Star Wars Retro Game
+Empire Attack
 """
 
 # Built-in/Generic Imports
@@ -45,7 +45,6 @@ WIDTH, HEIGHT = 1000, 800
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)     
 FPS = 60   
 FONT = pygame.font.SysFont("Cascadia Code", 40)
-VERSION = '0.0.3'
 
 clock = pygame.time.Clock()
 
@@ -225,7 +224,7 @@ name = input('Enter your name: ')
 
 if name != '':
     with open('ranking.txt', 'a') as ranking:
-        ranking.write(f'{name}#{points}#{VERSION}\n')
+        ranking.write(f'{name}#{points}#{__version__}\n')
 
 table = []
 
