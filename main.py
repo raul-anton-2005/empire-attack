@@ -60,10 +60,10 @@ time_infinite_bullets = 10000
 playing = True
 
 cube = Cube(WIDTH/2, HEIGHT-120)
-pew = pygame.mixer.Sound('assets/pew.mp3')
+pew = pygame.mixer.Sound('empire-attack/assets/pew.mp3')
 pew.set_volume(0.25)
-explotion = pygame.mixer.Sound('assets/explotion.mp3')
-heal = pygame.mixer.Sound('assets/heal.mp3')
+explotion = pygame.mixer.Sound('empire-attack/assets/explotion.mp3')
+heal = pygame.mixer.Sound('empire-attack/assets/heal.mp3')
 enemies = []
 lives = 3
 points = 0
@@ -77,7 +77,7 @@ number_infinite_bullets = 0
 
 lose_text = FONT.render('YOU LOST', True, 'white')
 
-pygame.mixer.music.load('assets/sw_theme.mp3')
+pygame.mixer.music.load('empire-attack/assets/sw_theme.mp3')
 pygame.mixer.music.set_volume(0.85)
 pygame.time.delay(500)
 pygame.mixer.music.play(loops=-1)

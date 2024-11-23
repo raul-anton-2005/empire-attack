@@ -73,7 +73,7 @@ class Heart:
     height = 30
     speed = 4
     colour = 'red'
-    image = pygame.image.load('assets/heart.jpg')
+    image = pygame.image.load('empire-attack/assets/heart.jpg')
     image = pygame.transform.scale(image, (30, 30))
 
     def __init__(self, x, y) -> None:
