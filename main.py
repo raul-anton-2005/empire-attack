@@ -223,12 +223,12 @@ pygame.display.quit()
 name = input('Enter your name: ')
 
 if name != '':
-    with open('ranking.txt', 'a') as ranking:
+    with open('empire-attack/ranking.txt', 'a') as ranking:
         ranking.write(f'{name}#{points}#{__version__}\n')
 
 table = []
 
-with open('ranking.txt', 'r') as file:
+with open('empire-attack/ranking.txt', 'r') as file:
     for line in file:
         if line[-1] == '\n':
             line = line[:-1]
