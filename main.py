@@ -64,6 +64,7 @@ cube = Cube(WIDTH/2, HEIGHT-120)
 pew = pygame.mixer.Sound('assets/pew.mp3')
 pew.set_volume(0.25)
 explotion = pygame.mixer.Sound('assets/explotion.mp3')
+heal = pygame.mixer.Sound('assets/heal.mp3')
 enemies = []
 lives = 3
 points = 0
@@ -191,7 +192,7 @@ while playing:
         ### MANAGE LIVES ###
 
         if points != 0:
-            if points % 50 == 0 and not heart_spawned and points != current_points:
+            if points % 5 == 0 and not heart_spawned and points != current_points:
                 current_points = points
                 heart_spawned = True
                 pos_x_h = random.randint(5, WIDTH - Enemy.width)
