@@ -19,7 +19,7 @@ from characters import Reward
 
 __authors__ = ["Raúl Antón Echevarría"]
 __contact__ = ["raulantonechevarria@gmail.com"]
-__copyright__ = "Not Free To Use"
+__copyright__ = "Free To Use"
 __credits__ = ["Raúl Antón Echevarría"]
 __date__ = "2024/08/22"
 __email__ = ["raulantonechevarria@gmail.com"]
