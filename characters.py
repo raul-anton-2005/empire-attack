@@ -1,12 +1,14 @@
 import pygame
-
+import os
+MAIN_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(MAIN_DIR, 'assets')
 
 class Cube:
     width = 80
     height = 80
     speed = 7.5
     colour = 'green'
-    image = pygame.image.load('./assets/xwing.png')
+    image = pygame.image.load(f'{ASSETS_DIR}/xwing.png')
     image = pygame.transform.scale(image, (100,100))
 
     def __init__(self, x, y) -> None:
@@ -29,7 +31,7 @@ class Bullet:
     height = 20
     speed = 7.5
     colour = 'blue'
-    image = pygame.image.load('./assets/laser.jpg')
+    image = pygame.image.load(f'{ASSETS_DIR}/laser.jpg')
     image = pygame.transform.scale(image, (35, 45))
 
     def __init__(self, x, y) -> None:
@@ -51,7 +53,7 @@ class Enemy:
     height = 100
     speed = 4
     colour = 'red'
-    image = pygame.image.load('./assets/tie.jpg')
+    image = pygame.image.load(f'{ASSETS_DIR}/tie.jpg')
     image = pygame.transform.scale(image, (150, 100))
     def __init__(self, x, y) -> None:
         self.x = x
@@ -73,7 +75,7 @@ class Heart:
     height = 30
     speed = 4
     colour = 'red'
-    image = pygame.image.load('./assets/heart.jpg')
+    image = pygame.image.load(f'{ASSETS_DIR}/heart.jpg')
     image = pygame.transform.scale(image, (30, 30))
 
     def __init__(self, x, y) -> None:
@@ -95,7 +97,7 @@ class Reward:
     height = 30
     speed = 4
     colour = 'red'
-    image = pygame.image.load('./assets/infinite.webp')
+    image = pygame.image.load(f'{ASSETS_DIR}/infinite.webp')
     image = pygame.transform.scale(image, (60, 60))
 
     def __init__(self, x, y) -> None:

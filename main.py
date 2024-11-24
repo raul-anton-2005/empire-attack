@@ -9,6 +9,7 @@ Empire Attack
 
 import pygame
 import random
+import os
 
 # Own modules
 
@@ -45,6 +46,9 @@ WIDTH, HEIGHT = 1000, 800
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)     
 FPS = 60   
 FONT = pygame.font.SysFont("Cascadia Code", 40)
+MAIN_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(MAIN_DIR, 'assets')
+
 
 clock = pygame.time.Clock()
 
@@ -60,10 +64,10 @@ time_infinite_bullets = 10000
 playing = True
 
 cube = Cube(WIDTH/2, HEIGHT-120)
-pew = pygame.mixer.Sound('./assets/pew.mp3')
+pew = pygame.mixer.Sound(f'{ASSETS_DIR}/pew.mp3')
 pew.set_volume(0.25)
-explotion = pygame.mixer.Sound('./assets/explotion.mp3')
-heal = pygame.mixer.Sound('./assets/heal.mp3')
+explotion = pygame.mixer.Sound(f'{ASSETS_DIR}/explotion.mp3')
+heal = pygame.mixer.Sound(f'{ASSETS_DIR}/heal.mp3')
 enemies = []
 lives = 3
 points = 0
@@ -77,7 +81,7 @@ number_infinite_bullets = 0
 
 lose_text = FONT.render('YOU LOST', True, 'white')
 
-pygame.mixer.music.load('./assets/sw_theme.mp3')
+pygame.mixer.music.load(f'{ASSETS_DIR}/sw_theme.mp3')
 pygame.mixer.music.set_volume(0.85)
 pygame.time.delay(500)
 pygame.mixer.music.play(loops=-1)
@@ -223,12 +227,12 @@ pygame.display.quit()
 name = input('Enter your name: ')
 
 if name != '':
-    with open('./ranking.txt', 'a') as ranking:
+    with open(f'{MAIN_DIR}/ranking.txt', 'a') as ranking:
         ranking.write(f'{name}#{points}#{__version__}\n')
 
 table = []
 
-with open('./ranking.txt', 'r') as file:
+with open(f'{MAIN_DIR}/ranking.txt', 'r') as file:
     for line in file:
         if line[-1] == '\n':
             line = line[:-1]
