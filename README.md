@@ -13,7 +13,7 @@ Empire Attack is a Python-based game where players defend their empire against w
 
 ### **Option 1: Run the Executable (Easiest Way)**
 1. Clone the repository (watch Option 2 step 1).  
-2. **Run `EmpireAttack.exe`**.  
+2. **Run `EmpireAttack.exe` (Windows) or `EmpireAttack` (Linux/Mac)**.  
 3. Play and enjoy!  
 
 ### **Option 2: Run from Source Code**
