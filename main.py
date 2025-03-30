@@ -48,6 +48,8 @@ FPS = 60
 FONT = pygame.font.SysFont("Cascadia Code", 40)
 MAIN_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(MAIN_DIR, 'assets')
+USER_FOLDER = os.path.expanduser("~")
+GAME_FOLDER = os.path.join(USER_FOLDER, 'EmpireAttack')
 
 
 clock = pygame.time.Clock()
@@ -224,23 +226,28 @@ while playing:
     pygame.display.update()
 
 pygame.display.quit()
+
+if not os.path.exists(GAME_FOLDER):
+    os.makedirs(GAME_FOLDER)
+
+ranking_path = os.path.join(GAME_FOLDER, "ranking.txt")
+
 name = input('Enter your name: ')
 
 if name != '':
-    with open(f'{MAIN_DIR}/ranking.txt', 'a') as ranking:
+    with open(ranking_path, 'a') as ranking:
         ranking.write(f'{name}#{points}#{__version__}\n')
 
 table = []
-
-with open(f'{MAIN_DIR}/ranking.txt', 'r') as file:
+with open(ranking_path, 'r') as file:
     for line in file:
-        if line[-1] == '\n':
-            line = line[:-1]
-        data = line.split('#')
-        table.append(data)
+        table.append(line.strip().split('#'))
 
 table = sorted(table, key=lambda x: int(x[1]), reverse=True)
+
 print('\n\n\n\n\n\n')
 for element in table:
     print(f'{element[0]}: {element[1]} -> {element[2]}')
 print('\n\n\n\n\n\n')
+
+print(f"Ranking guardado en: {ranking_path}")
